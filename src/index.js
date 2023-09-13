@@ -2,7 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
 
-const rotas = require("./routes");
+const router = require("./routes/router");
 
 const app = express();
 
@@ -14,5 +14,5 @@ app.use(router);
 const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
-  console.log("aplicação rodando na porta:", { port });
+  console.log("aplicação rodando na porta:", port);
 });
