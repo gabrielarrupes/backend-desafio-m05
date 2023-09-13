@@ -1,6 +1,8 @@
 const express = require("express");
-const { postUser } = require("../controllers/user");
+
 const UserRegistrationValidation = require("../middleware/UserRegistrationValidation");
+
+const { postUser } = require("../controllers/user");
 const { userSchema } = require("../schemas/userSchema");
 
 router = express();
