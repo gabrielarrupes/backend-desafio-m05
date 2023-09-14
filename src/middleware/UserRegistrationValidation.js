@@ -5,7 +5,6 @@ const UserRegistrationValidation = (joiSchema) => async (req, res, next) => {
     await existsInDatabase(req, res);
     next();
   } catch (error) {
-    console.log(error);
     return res.status(400).json({ message: error.message });
   }
 };
