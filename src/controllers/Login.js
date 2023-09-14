@@ -28,12 +28,12 @@ Login = async (req, res) => {
     const userData = {
       name: loggedUser.name,
       email: loggedUser.email,
+
       token,
     };
 
     return res.status(200).json(userData);
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
