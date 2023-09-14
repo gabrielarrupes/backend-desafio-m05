@@ -7,6 +7,6 @@ const { userSchema } = require("../schemas/userSchema");
 
 router = express();
 
-router.post("/sign-up", UserRegistrationValidation(userSchema), postUser);
+router.post("/signUp", UserRegistrationValidation(userSchema), postUser);
 
 module.exports = router;
