@@ -34,7 +34,7 @@ const UserUpdateValidation = (joiSchema) => async (req, res, next) => {
     await joiSchema.validateAsync(req.body);
 
     if (email !== currentEmail || cpf !== currentCPF) {
-      await existsInDatabase(req, res);
+      await existsInDatabase(req, (database = "users"));
     }
 
     next();

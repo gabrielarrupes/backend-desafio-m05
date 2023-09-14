@@ -1,14 +1,17 @@
 const express = require("express");
 
-const { postUser, putUser } = require("../controllers/user");
 const Login = require("../controllers/Login");
+const { postUser, putUser } = require("../controllers/user");
+const { postCustomer } = require("../controllers/customer");
 
 const { userSchema } = require("../schemas/userSchema");
 const { userUpdateSchema } = require("../schemas/UserUpdateSchema");
+const { customerSchema } = require("../schemas/CustomerSchema");
 
 const UserRegistrationValidation = require("../middleware/UserRegistrationValidation");
 const UserLoggedValidation = require("../middleware/UserLoggedValidation");
 const UserUpdateValidation = require("../middleware/UserUpdateValidation");
+const CustomerRegistrationValidation = require("../middleware/CustomerRegistrationValidation");
 
 router = express();
 
@@ -18,5 +21,11 @@ router.post("/signUp", UserRegistrationValidation(userSchema), postUser);
 router.use(UserLoggedValidation);
 
 router.put("/user/update", UserUpdateValidation(userUpdateSchema), putUser);
+
+router.post(
+  "/customer",
+  CustomerRegistrationValidation(customerSchema),
+  postCustomer
+);
 
 module.exports = router;

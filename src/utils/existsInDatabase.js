@@ -1,10 +1,10 @@
 const connection = require("../services/connection");
 
-existsInDatabase = async (req) => {
+existsInDatabase = async (req, database) => {
   const { email, cpf } = req.body;
 
   if (email) {
-    const emailExistsInDatabase = await connection("users")
+    const emailExistsInDatabase = await connection(database)
       .where({ email })
       .first();
     if (emailExistsInDatabase) {
@@ -13,7 +13,7 @@ existsInDatabase = async (req) => {
   }
 
   if (cpf) {
-    const cpfExistsInDatabase = await connection("users")
+    const cpfExistsInDatabase = await connection(database)
       .where({ cpf })
       .first();
     if (cpfExistsInDatabase) {
