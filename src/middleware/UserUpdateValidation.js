@@ -8,20 +8,23 @@ const UserUpdateValidation = (joiSchema) => async (req, res, next) => {
     const currentEmail = req.body.email;
     const currentCPF = req.body.cpf;
 
-    async function areObjectsEqual(objeto1, objeto2) {
-      passwordHash = await bcrypt.compare(objeto2.password, objeto1.password);
+    const areObjectsEqual = async (fisrtObject, secondObject) => {
+      passwordHash = await bcrypt.compare(
+        secondObject.password,
+        fisrtObject.password
+      );
 
       if (!passwordHash) {
         return false;
       }
 
       return (
-        objeto1.name === objeto2.name &&
-        objeto1.email === objeto2.email &&
-        objeto1.telephone === objeto2.telephone &&
-        objeto1.cpf === objeto2.cpf
+        fisrtObject.name === secondObject.name &&
+        fisrtObject.email === secondObject.email &&
+        fisrtObject.telephone === secondObject.telephone &&
+        fisrtObject.cpf === secondObject.cpf
       );
-    }
+    };
 
     const checkNoChange = await areObjectsEqual(req.user, req.body);
 

@@ -1,6 +1,6 @@
 const connection = require("../services/connection");
 
-postCustomer = async (req, res) => {
+const postCustomer = async (req, res) => {
   const { id } = req.user;
   const {
     name,
@@ -36,9 +36,9 @@ postCustomer = async (req, res) => {
         .json("Não foi possível concluir o cadastro do cliente");
     }
 
-    return res.status(200).json("Cliente cadastrado com sucesso.");
+    return res.status(201).json("Cliente cadastrado com sucesso.");
   } catch (error) {
-    return res.status(400).json(error.messagem);
+    return res.status(500).json({ message: "Erro interno do servidor" });
   }
 };
 

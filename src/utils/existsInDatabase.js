@@ -1,6 +1,6 @@
 const connection = require("../services/connection");
 
-existsInDatabase = async (req, database) => {
+const existsInDatabase = async (req, database) => {
   const { email, cpf } = req.body;
 
   if (email) {

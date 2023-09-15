@@ -2,8 +2,9 @@ const connection = require("../services/connection");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-Login = async (req, res) => {
+const Login = async (req, res) => {
   const { email, password } = req.body;
+  const jwtPassword = process.env.JWT_PASS;
 
   try {
     const loggedUser = await connection("users")
@@ -21,8 +22,6 @@ Login = async (req, res) => {
       return res.status(400).json({ message: "A senha não confere" });
     }
 
-    const jwtPassword = process.env.JWT_PASS;
-
     const token = jwt.sign(loggedUser.id, jwtPassword);
 
     const userData = {
@@ -32,7 +31,7 @@ Login = async (req, res) => {
       token,
     };
 
-    return res.status(200).json(userData);
+    return res.status(201).json(userData);
   } catch (error) {
     return res.status(500).json({ message: "Erro interno do servidor" });
   }

@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const connection = require("../services/connection");
 
-postUser = async (req, res) => {
+const postUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
@@ -14,16 +14,16 @@ postUser = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json("Não foi possível concluir o cadastro");
+      return res.status(500).json("Erro interno do servidor");
     }
 
-    return res.status(200).json("Usuário cadastrado com sucesso.");
+    return res.status(201).json("Usuário cadastrado com sucesso.");
   } catch (error) {
-    return res.status(400).json(error.messagem);
+    return res.status(400).json({ message: "Erro ao cadastrar usuário" });
   }
 };
 
-putUser = async (req, res) => {
+const putUser = async (req, res) => {
   const { id } = req.user;
   const { name, email, cpf, telephone, password } = req.body;
 
@@ -47,9 +47,13 @@ putUser = async (req, res) => {
       })
       .returning("*");
 
-    return res.status(201).json("Usuário atualizado com sucesso!");
+    if (!user) {
+      return res.status(400).json({ message: "Erro ao atualizar o usuário" });
+    }
+
+    return res.status(200).json("Usuário atualizado com sucesso!");
   } catch (error) {
-    return res.status(400).json(error.messagem);
+    return res.status(500).json("Erro interno do servidor");
   }
 };
 

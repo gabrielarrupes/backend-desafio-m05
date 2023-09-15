@@ -1,10 +1,10 @@
 const express = require("express");
 
 const Login = require("../controllers/Login");
-const { postUser, putUser } = require("../controllers/user");
+const { postUser, putUser } = require("../controllers/User");
 const { postCustomer } = require("../controllers/customer");
 
-const { userSchema } = require("../schemas/userSchema");
+const { userSchema } = require("../schemas/UserSchema");
 const { userUpdateSchema } = require("../schemas/UserUpdateSchema");
 const { customerSchema } = require("../schemas/CustomerSchema");
 
@@ -13,9 +13,9 @@ const UserLoggedValidation = require("../middleware/UserLoggedValidation");
 const UserUpdateValidation = require("../middleware/UserUpdateValidation");
 const CustomerRegistrationValidation = require("../middleware/CustomerRegistrationValidation");
 
-router = express();
+const router = express();
 
-router.post("/Login", Login);
+router.post("/login", Login);
 router.post("/signUp", UserRegistrationValidation(userSchema), postUser);
 
 router.use(UserLoggedValidation);

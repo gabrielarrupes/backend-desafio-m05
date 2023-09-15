@@ -11,7 +11,7 @@ const UserLoggedValidation = async (req, res, next) => {
   try {
     const token = authorization.replace("Bearer ", " ").trim();
 
-    const id = jwt.decode(token, process.env.JWT_PASS);
+    const id = jwt.verify(token, process.env.JWT_PASS);
 
     const userExists = await connection("users").select().where({ id }).first();
 
