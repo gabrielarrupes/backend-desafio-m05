@@ -15,16 +15,15 @@ const userUpdateSchema = joi.object({
       "O e-mail deve ter um formato válido, exemplo: email@email.com",
   }),
 
-  cpf: joi.string().min(11).max(11).pattern(/^\d+$/).messages({
-    "string.min": "O CPF deve conter 11 números",
-    "string.empty": "O campo nome é obrigatório",
-    "string.pattern.base": "O cpf deve conter apenas números",
-    "string.max": "O CPF deve conter apenas 11 números",
-  }),
+  cpf: joi.string().length(11).pattern(/^\d+$/).required().messages({
+    "string.length": "O CPF deve ter exatamente 11 caracteres",
+    "string.pattern.base": "O CPF deve conter apenas números",
+    "any.required": "O CPF é obrigatório",
+  }),,
 
   telephone: joi.string().pattern(/^\d+$/).messages({
     "string.pattern.base": "O telefone deve conter apenas números",
-    "string.empty": "O campo nome é obrigatório",
+    "string.empty": "O campo telefone é obrigatório",
   }),
 
   password: joi

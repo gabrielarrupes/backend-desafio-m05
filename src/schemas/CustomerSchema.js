@@ -12,15 +12,16 @@ const customerSchema = joi.object({
     }),
 
   email: joi.string().email().required().messages({
-    "string.email": "O email informado é inválido",
-    "string.empty": "O email não pode estar vazio",
-    "any.required": "O email é obrigatório",
+    "string.email": "Endereço de e-mail inválido.",
+    "string.empty": "O e-mail não pode estar vazio",
+    "any.required": "O e-mail é obrigatório",
   }),
 
   cep: joi.string().max(8).pattern(/^\d+$/).messages({
     "string.max": "O CEP deve ter no máximo 8 caracteres",
-    "string.pattern.base": "O cep deve conter apenas números",
+    "string.pattern.base": "O CEP deve conter apenas números",
   }),
+
   cpf: joi.string().length(11).pattern(/^\d+$/).required().messages({
     "string.length": "O CPF deve ter exatamente 11 caracteres",
     "string.pattern.base": "O CPF deve conter apenas números",
@@ -48,13 +49,13 @@ const customerSchema = joi.object({
   }),
 
   cidade: joi.string().required().messages({
-    "string.empty": "A cidade não pode estar vazia",
-    "any.required": "A cidade é obrigatória",
+    "string.empty": "O campo cidade não pode estar vazio",
+    "any.required": "O Campo cidade é Obrigatório",
   }),
 
   estado: joi.string().required().messages({
-    "string.empty": "O estado não pode estar vazio",
-    "any.required": "O estado é obrigatório",
+    "string.empty": "O campo Estado não pode estar vazio",
+    "any.required": "O campo Estado é obrigatório",
   }),
 });
 

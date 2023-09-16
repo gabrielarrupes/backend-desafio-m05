@@ -260,6 +260,10 @@ Status 400 (Bad Request) - Validação de Nome:
 
 > {"message": "Nome deve conter apenas letras."}
 
+Status 400 (Bad Request) - Verificação existência de CPF:
+
+> {"message": "CPF já cadastrado"}
+
 Status 400 (Bad Request) - Validação de CPF:
 
 > {"message": "O CPF deve conter exatamente 11 caracteres"}
