@@ -2,9 +2,9 @@
 
 Bem-vindo à API Garotos de Programa! Esta API permite que você registre e edite usuários, faça login e cadastre clientes. Tudo com validações rigorosas para garantir a segurança dos dados.
 
-# Endpoint SignIn
+# Endpoint SignUP
 
-- **Cadastro de Usuário**: `POST /signup`
+- **Cadastro de Usuário**: `POST /signUp`
 
 - :bulb: **Observação: Todos os dados obrigatórios estão identificados com "\*". E caso não sejam preenchidos ou enviados com valor vazio haverá um retorno com os seguintes dados:**
 
