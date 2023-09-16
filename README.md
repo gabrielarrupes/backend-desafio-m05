@@ -30,7 +30,7 @@ Para cadastrar um novo usuário, você deve fornecer os seguintes dados:
 
 - `email`\* : **Endereço de e-mail válido** (Se já estiver cadastrado será retonado um erro).
 
-- `senha`\* : **Senha com pelo menos 8 caracteres**, incluindo pelo menos um número, um caractere especial e uma letra maiúscula.
+- `password`\* : **Senha com pelo menos 8 caracteres**, incluindo pelo menos um número, um caractere especial e uma letra maiúscula.
 
 ## Exemplo de Requisição
 
@@ -42,7 +42,7 @@ Para cadastrar um novo usuário, você deve fornecer os seguintes dados:
 > {
 > "nome": "Exemplo",
 > "email": "exemplo@email.com",
-> "senha": "Senha123!"
+> "password": "Senha123!"
 > }
 
 **Respostas:**
@@ -85,7 +85,7 @@ Status 400 (Bad Request) - Validação de Senha:
 Para fazer login, você deve fornecer os seguintes dados:
 
 - `email`\*: Endereço de e-mail registrado.
-- `senha`\*: Senha correspondente à conta.
+- `password`\*: Senha correspondente à conta.
 
 ## Exemplo de Requisição
 
@@ -96,7 +96,7 @@ Aqui está um exemplo de como fazer uma requisição para fazer login:
 >
 > {
 > "email": "exemplo@email.com",
-> "senha": "Senha123!"
+> "password": "Senha123!"
 > }
 
 **Respostas:**
@@ -136,6 +136,7 @@ Status 404 (Not Found) - Senha incorreta:
 - `email`\*: Endereço de e-mail válido (não pode já estar registrado no banco de dados).
 - `cpf`: CPF válido com exatamente 11 caracteres (apenas números).
 - `telefone`: Número de telefone (apenas números).
+- `password`\* : : **Senha com pelo menos 8 caracteres**, incluindo pelo menos um número, um caractere especial e uma letra maiúscula.
 
 ## Exemplo de Requisição
 
@@ -173,6 +174,10 @@ Sucesso (Status 200):
 
 - A API retornará mensagens de erro específicas para cada validação não atendida. Aqui estão alguns exemplos:
 
+Status 400 (Bad Request) - Nenhum dado foi alterado:
+
+> {"message": "Ao menos um campo deve ser alterado."}
+
 Status 400 (Bad Request) - Validação de Nome:
 
 > {"message": "Nome deve conter apenas letras e espaços."}
@@ -192,6 +197,10 @@ Status 400 (Bad Request) - Validação de CPF:
 Status 400 (Bad Request) - Validação de Telefone:
 
 > {"message": "O campo telefone deve conter apenas números."}
+
+Status 400 (Bad Request) - Validação de Senha:
+
+> { "message": "A senha deve ter pelo menos 8 caracteres, incluindo um número, um caractere especial e uma letra maiúscula." }
 
 ---
 
