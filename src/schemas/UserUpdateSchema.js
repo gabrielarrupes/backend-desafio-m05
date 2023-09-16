@@ -29,7 +29,15 @@ const userUpdateSchema = joi.object({
 
   password: joi
     .string()
-    
+    .min(8)
+    .pattern(/^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*.])/)
+    .messages({
+      "string.empty": "O campo Senha é obrigatório",
+      "string.min":
+        "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
+      "string.pattern.base":
+        "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
+    }),
 });
 
 module.exports = { userUpdateSchema };
