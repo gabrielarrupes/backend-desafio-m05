@@ -166,7 +166,7 @@ Sucesso (Status 200):
 
 - Se todas as validações forem bem-sucedidas, o usuário será atualizado e a API retornará uma mensagem de sucesso:
 
-> {"mensagem": "Usuário atualizado com sucesso!"}
+> {"message": "Usuário atualizado com sucesso!"}
 
 **Erros Possíveis:**
 
@@ -255,7 +255,7 @@ Sucesso (Status 201):
 
 Se todas as validações forem bem-sucedidas, o cliente será cadastrado e a API retornará uma mensagem de sucesso:
 
-> {"mensagem": "Cliente cadastrado com sucesso!"}
+> {"message": "Cliente cadastrado com sucesso!"}
 
 Erros Possíveis:
 
