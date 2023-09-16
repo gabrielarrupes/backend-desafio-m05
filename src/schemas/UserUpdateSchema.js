@@ -19,7 +19,7 @@ const userUpdateSchema = joi.object({
     "string.length": "O CPF deve ter exatamente 11 caracteres",
     "string.pattern.base": "O CPF deve conter apenas números",
     "any.required": "O CPF é obrigatório",
-  }),,
+  }),
 
   telephone: joi.string().pattern(/^\d+$/).messages({
     "string.pattern.base": "O telefone deve conter apenas números",
