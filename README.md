@@ -206,10 +206,13 @@ Status 400 (Bad Request) - Validação de Senha:
 
 # Cadastro de Cliente
 
+- **Cadastro de Cliente**: `POST /customer`
+
 ## Dados de Entrada
 
 - Para cadastrar um novo cliente, você deve fornecer os seguintes dados:
 
+- `id_responsable`\*: Esse dado é fornecido automáticamente de acordo com o token do usuário logado.
 - `nome`\*: Nome do cliente (deve conter apenas letras).
 - `email`\*: Endereço de e-mail válido (não pode já haver o mesmo e-mail de cliente cadastrado).
 - `telephone`\*: Número de telefone (apenas números).
@@ -223,6 +226,10 @@ Status 400 (Bad Request) - Validação de Senha:
 ## Exemplo de Requisição
 
 - Aqui está um exemplo de como fazer uma requisição para cadastrar um novo cliente:
+
+- **O usuário deve estar autenticado para poder cadastrar um novo cliente**
+
+  - Não precisa enviar o ID do usuário na rota pois o ID é validado pelo token do usuário logado
 
 > POST /customer
 > Content-Type: application/json
