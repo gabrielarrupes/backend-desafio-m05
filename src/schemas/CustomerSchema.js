@@ -18,13 +18,13 @@ const customerSchema = joi.object({
   }),
 
   cep: joi.string().max(8).pattern(/^\d+$/).messages({
-    "string.max": "O cep deve ter no máximo 8 caracteres",
+    "string.max": "O CEP deve ter no máximo 8 caracteres",
     "string.pattern.base": "O cep deve conter apenas números",
   }),
   cpf: joi.string().length(11).pattern(/^\d+$/).required().messages({
-    "string.length": "O cpf deve ter exatamente 11 caracteres",
-    "string.pattern.base": "O cpf deve conter apenas números",
-    "any.required": "O cpf é obrigatório",
+    "string.length": "O CPF deve ter exatamente 11 caracteres",
+    "string.pattern.base": "O CPF deve conter apenas números",
+    "any.required": "O CPF é obrigatório",
   }),
 
   telephone: joi.string().pattern(/^\d+$/).required().messages({
