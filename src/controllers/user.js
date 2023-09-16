@@ -1,11 +1,13 @@
 const bcrypt = require("bcrypt");
 const connection = require("../services/connection");
+const existsInDatabase = require("../utils/existsInDatabase");
 
 const postUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
     const passwordHash = await bcrypt.hash(password, 10);
+    await existsInDatabase(req, "users");
 
     const user = await connection("users").insert({
       name,
