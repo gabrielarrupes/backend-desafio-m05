@@ -166,9 +166,7 @@ Sucesso (Status 200):
 
 - Se todas as validações forem bem-sucedidas, o usuário será atualizado e a API retornará uma mensagem de sucesso:
 
-{
-"mensagem": "Usuário atualizado com sucesso!"
-}
+> {"mensagem": "Usuário atualizado com sucesso!"}
 
 **Erros Possíveis:**
 
