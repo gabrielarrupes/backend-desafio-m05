@@ -39,9 +39,9 @@ const userSchema = joi.object({
       "string.empty": "O campo Senha é obrigatório",
       "any-required": "O campo senha é obrigatório",
       "string.min":
-        "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
+        "A senha deve ter pelo menos 8 caracteres, incluindo um número, um caractere especial e uma letra maiúscula.",
       "string.pattern.base":
-        "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
+        "A senha deve ter pelo menos 8 caracteres, incluindo um número, um caractere especial e uma letra maiúscula.",
     }),
 });
 
