@@ -30,11 +30,26 @@ const customerSchema = joi.object({
     "string.empty": "O campo nome é obrigatório",
   }),
 
-  cep: joi.string(),
+  cep: joi
+    .string()
+    .regex(/^[0-9]+$/)
+    .max(8)
+    .required()
+    .messages({
+      "string.empty": "O campo nome é obrigatório",
+      "string.pattern.base": "O telefone deve conter apenas números",
+      "string.max": "O CPF deve conter apenas 11 números",
+      "any.required": "O campo email é obrigatório",
+    }),
+
   logradouro: joi.string(),
+
   complemento: joi.string(),
+
   bairro: joi.string(),
+
   cidade: joi.string(),
+
   estado: joi.string(),
 });
 
