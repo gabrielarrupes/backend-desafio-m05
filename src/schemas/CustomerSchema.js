@@ -3,54 +3,59 @@ const joi = require("joi");
 const customerSchema = joi.object({
   name: joi
     .string()
-    .pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/)
+    .regex(/^[a-zA-Z\s]+$/)
     .required()
     .messages({
-      "string.base": "O nome deve conter apenas letras",
-      "string.empty": "O campo nome é obrigatório",
-      "string.pattern.base": "o nome deve conter apenas letras",
+      "string.empty": "O nome não pode estar vazio",
+      "any.required": "O nome é obrigatório",
+      "string.pattern.base": "O nome deve conter apenas letras e espaços",
     }),
 
   email: joi.string().email().required().messages({
-    "string.email":
-      "O e-mail deve ter um formato válido, exemplo: email@email.com",
-    "string.empty": "O campo email é obrigatório",
-    "any.required": "O campo email é obrigatório",
+    "string.email": "O email informado é inválido",
+    "string.empty": "O email não pode estar vazio",
+    "any.required": "O email é obrigatório",
   }),
 
-  cpf: joi.string().min(11).max(11).pattern(/^\d+$/).messages({
-    "string.min": "O CPF deve conter 11 números",
-    "string.empty": "O campo nome é obrigatório",
+  cep: joi.string().max(8).pattern(/^\d+$/).messages({
+    "string.max": "O cep deve ter no máximo 8 caracteres",
+    "string.pattern.base": "O cep deve conter apenas números",
+  }),
+  cpf: joi.string().length(11).pattern(/^\d+$/).required().messages({
+    "string.length": "O cpf deve ter exatamente 11 caracteres",
     "string.pattern.base": "O cpf deve conter apenas números",
-    "string.max": "O CPF deve conter apenas 11 números",
+    "any.required": "O cpf é obrigatório",
   }),
 
-  telephone: joi.string().pattern(/^\d+$/).messages({
+  telephone: joi.string().pattern(/^\d+$/).required().messages({
     "string.pattern.base": "O telefone deve conter apenas números",
-    "string.empty": "O campo nome é obrigatório",
+    "any.required": "O telefone é obrigatório",
   }),
 
-  cep: joi
-    .string()
-    .regex(/^[0-9]+$/)
-    .max(8)
-    .required()
-    .messages({
-      "string.empty": "O campo nome é obrigatório",
-      "string.pattern.base": "O telefone deve conter apenas números",
-      "string.max": "O CPF deve conter apenas 11 números",
-      "any.required": "O campo email é obrigatório",
-    }),
+  logradouro: joi.string().required().messages({
+    "string.empty": "O logradouro não pode estar vazio",
+    "any.required": "O logradouro é obrigatório",
+  }),
 
-  logradouro: joi.string(),
+  complemento: joi.string().required().messages({
+    "string.empty": "O complemento não pode estar vazio",
+    "any.required": "O complemento é obrigatório",
+  }),
 
-  complemento: joi.string(),
+  bairro: joi.string().required().messages({
+    "string.empty": "O bairro não pode estar vazio",
+    "any.required": "O bairro é obrigatório",
+  }),
 
-  bairro: joi.string(),
+  cidade: joi.string().required().messages({
+    "string.empty": "A cidade não pode estar vazia",
+    "any.required": "A cidade é obrigatória",
+  }),
 
-  cidade: joi.string(),
-
-  estado: joi.string(),
+  estado: joi.string().required().messages({
+    "string.empty": "O estado não pode estar vazio",
+    "any.required": "O estado é obrigatório",
+  }),
 });
 
 module.exports = { customerSchema };
