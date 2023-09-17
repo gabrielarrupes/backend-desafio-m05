@@ -3,7 +3,7 @@ const connection = require("../services/connection");
 const existsInDatabase = require("../utils/existsInDatabase");
 
 const getUser = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.user;
   try {
     const user = connection("users").where({ id }).first();
 

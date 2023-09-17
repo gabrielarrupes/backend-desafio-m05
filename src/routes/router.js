@@ -19,7 +19,7 @@ router.post("/login", Login);
 router.post("/signUp", UserRegistrationValidation(userSchema), postUser);
 
 router.use(UserLoggedValidation);
-router.get("/user/:id", getUser);
+router.get("/user", getUser);
 
 router.put("/user/update", UserUpdateValidation(userUpdateSchema), putUser);
 

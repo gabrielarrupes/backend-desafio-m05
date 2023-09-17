@@ -124,6 +124,47 @@ Status 404 (Not Found) - Senha incorreta:
 
 ---
 
+# Endpoint getUser
+
+- **Cadastro de Usuário**: `GET /user/id`
+
+### Dados de Entrada
+
+- **O usuário deve estar autenticado para poder fazer o get de informações**
+
+  - Não precisa enviar o ID do usuário na rota pois o ID é validado pelo token do usuário logado
+
+## Exemplo de Requisição
+
+> GET /user
+> Content-Type: application/json
+> headers: {
+> 'Authorization': `Bearer ${token}`
+> };
+
+**Respostas:**
+Sucesso (Status 200):
+
+- Se todas as validações forem bem-sucedidas, o usuário será cadastrado e a API retornará um objeto contendo as informações do usuario:
+
+> {
+> "nome": "Novo Nome",
+> "email": "novo@email.com",
+> "cpf": "12345678901",
+> "telephone": "1234567890",
+> "password": "senhaCriptografadaHash"
+> }
+
+**Erros Possíveis:**
+
+- A API retornará mensagens de erro específicas para cada validação não atendida. Aqui estão alguns exemplos:
+
+Status 404 (Not Found) - Validação de ID:
+
+> { "message": "Usuário não encontrado." }
+
+---
+
 # Endpoint Edição de Usuário
 
 - **Edição de Usuário**: `PUT /user/update`
