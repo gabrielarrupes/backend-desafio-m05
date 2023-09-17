@@ -2,6 +2,21 @@ const bcrypt = require("bcrypt");
 const connection = require("../services/connection");
 const existsInDatabase = require("../utils/existsInDatabase");
 
+const getUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = connection("users").where({ id }).first();
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuário não encontrado" });
+    }
+
+    return res.status(200).json({ user });
+  } catch (error) {
+    return res.status(500).json({ message: "Erro interno do servidor" });
+  }
+};
+
 const postUser = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -59,4 +74,4 @@ const putUser = async (req, res) => {
   }
 };
 
-module.exports = { postUser, putUser };
+module.exports = { getUser, postUser, putUser };

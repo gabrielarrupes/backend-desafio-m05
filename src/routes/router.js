@@ -15,12 +15,11 @@ const CustomerRegistrationValidation = require("../middleware/CustomerRegistrati
 
 const router = express();
 
-router.get("/", getUser);
-
 router.post("/login", Login);
 router.post("/signUp", UserRegistrationValidation(userSchema), postUser);
 
 router.use(UserLoggedValidation);
+router.get("/user/:id", getUser);
 
 router.put("/user/update", UserUpdateValidation(userUpdateSchema), putUser);
 
