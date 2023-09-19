@@ -15,27 +15,28 @@ const userUpdateSchema = joi.object({
       "O e-mail deve ter um formato válido, exemplo: email@email.com",
   }),
 
-  cpf: joi.string().length(11).pattern(/^\d+$/).required().messages({
-    "string.length": "O CPF deve ter exatamente 11 caracteres",
-    "string.pattern.base": "O CPF deve conter apenas números",
-    "any.required": "O CPF é obrigatório",
+  cpf: joi.string().min(0).max(11).messages({
+    "string.min": "O CPF deve conter 11 números",
+    "string.pattern.base": "O cpf deve conter apenas números",
+    "string.max": "O CPF deve conter apenas 11 números",
   }),
 
-  telephone: joi.string().pattern(/^\d+$/).messages({
+  telephone: joi.string().min(0).messages({
     "string.pattern.base": "O telefone deve conter apenas números",
-    "string.empty": "O campo telefone é obrigatório",
   }),
 
   password: joi
     .string()
     .min(8)
     .pattern(/^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*.])/)
+    .required()
     .messages({
       "string.empty": "O campo Senha é obrigatório",
+      "any-required": "O campo senha é obrigatório",
       "string.min":
-        "A senha deve ter pelo menos 8 caracteres, incluindo um número, um caractere especial e uma letra maiúscula.",
+        "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
       "string.pattern.base":
-        "A senha deve ter pelo menos 8 caracteres, incluindo um número, um caractere especial e uma letra maiúscula.",
+        "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
     }),
 });
 

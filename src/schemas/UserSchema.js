@@ -4,7 +4,6 @@ const userSchema = joi.object({
   name: joi
     .string()
     .pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/)
-    .required()
     .messages({
       "string.base": "O nome deve conter apenas letras",
       "string.empty": "O campo nome é obrigatório",
@@ -33,15 +32,15 @@ const userSchema = joi.object({
   password: joi
     .string()
     .min(8)
-    .pattern(/^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*.])/)
+    .pattern(/^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])/)
     .required()
     .messages({
       "string.empty": "O campo Senha é obrigatório",
       "any-required": "O campo senha é obrigatório",
       "string.min":
-        "A senha deve ter pelo menos 8 caracteres, incluindo um número, um caractere especial e uma letra maiúscula.",
+        "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
       "string.pattern.base":
-        "A senha deve ter pelo menos 8 caracteres, incluindo um número, um caractere especial e uma letra maiúscula.",
+        "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
     }),
 });
 
