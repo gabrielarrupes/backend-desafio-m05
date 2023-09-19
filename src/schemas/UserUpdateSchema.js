@@ -1,6 +1,6 @@
 const joi = require("joi");
 
-const userSchema = joi.object({
+const userUpdateSchema = joi.object({
   name: joi
     .string()
     .pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/)
@@ -8,31 +8,27 @@ const userSchema = joi.object({
       "string.base": "O nome deve conter apenas letras",
       "string.empty": "O campo nome é obrigatório",
       "string.pattern.base": "o nome deve conter apenas letras",
-      "any.required": "o campo nome é obrigatório",
     }),
 
-  email: joi.string().email().required().messages({
+  email: joi.string().email().messages({
     "string.email":
       "O e-mail deve ter um formato válido, exemplo: email@email.com",
-    "string.empty": "O campo email é obrigatório",
-    "any.required": "O campo email é obrigatório",
   }),
 
-  cpf: joi.string().min(11).max(11).pattern(/^\d+$/).messages({
+  cpf: joi.string().min(0).max(11).messages({
     "string.min": "O CPF deve conter 11 números",
     "string.pattern.base": "O cpf deve conter apenas números",
     "string.max": "O CPF deve conter apenas 11 números",
   }),
 
-  telephone: joi.string().pattern(/^\d+$/).messages({
+  telephone: joi.string().min(0).messages({
     "string.pattern.base": "O telefone deve conter apenas números",
-    "string.empty": "O campo nome é obrigatório",
   }),
 
   password: joi
     .string()
     .min(8)
-    .pattern(/^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])/)
+    .pattern(/^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*.])/)
     .required()
     .messages({
       "string.empty": "O campo Senha é obrigatório",
@@ -44,4 +40,4 @@ const userSchema = joi.object({
     }),
 });
 
-module.exports = { userSchema };
+module.exports = { userUpdateSchema };
