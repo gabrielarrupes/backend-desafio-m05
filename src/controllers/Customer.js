@@ -42,18 +42,14 @@ const postCustomer = async (req, res) => {
   }
 };
 
-
 const getCustomer = async (req, res) => {
-
-
   try {
     const result = await connection
-      .select('customers', 'change.status')
+      .select("customers", "change.status")
       .from(customers)
-      .join(change, 'customer.id', '=', 'change.idCustomer');
+      .join(charge, "customer.id", "=", "charge.idCustomer");
 
     return res.status(200).json({ result });
-
   } catch (error) {
     return res.status(500).json({ message: "Erro interno do servidor" });
   }

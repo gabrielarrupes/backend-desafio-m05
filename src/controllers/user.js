@@ -1,41 +1,69 @@
 const bcrypt = require("bcrypt");
 const connection = require("../services/connection");
-const existsInDatabase = require("../utils/existsInDatabase");
+const UserRegistrationValidation = require("../middleware/UserRegistrationValidation");
+const { userSchema } = require("../schemas/UserSchema");
 
 const getUser = async (req, res) => {
   const { id } = req.user;
   try {
-    const user = connection("users").where({ id }).first();
+    const user = await connection("users").where({ id }).first();
 
-    if (!user) {
-      return res.status(404).json({ message: "Usuário não encontrado" });
-    }
-
-    return res.status(200).json({ user });
+    return res.status(200).json(user);
   } catch (error) {
-    return res.status(500).json({ message: "Erro interno do servidor" });
+    console.log(error);
   }
 };
 
 const postUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, activeStep } = req.body;
+
+  console.log(activeStep);
+
+  if (!name) {
+    return res.status(400).json({ message: "O campo nome é obrigatório" });
+  }
+
+  if (!email) {
+    return res.status(400).json({ message: "O campo email é obrigatório" });
+  }
 
   try {
-    const passwordHash = await bcrypt.hash(password, 10);
-    await existsInDatabase(req, "users");
-
-    const user = await connection("users").insert({
-      name,
-      email,
-      password: passwordHash,
-    });
-
-    if (!user) {
-      return res.status(500).json("Erro interno do servidor");
+    if (name && email && password === "" && activeStep === 0) {
+      const emailExistsInDatabase = await connection("users")
+        .where({ email })
+        .first();
+      if (emailExistsInDatabase) {
+        return res.status(400).json({ message: "Email já cadastrado" });
+      }
+      if (!emailExistsInDatabase) {
+        return res.status(200).json({ message: "certo" });
+      }
     }
 
-    return res.status(201).json("Usuário cadastrado com sucesso.");
+    if (activeStep === 1 && password === "") {
+      return res
+        .status(400)
+        .json({ message: "O campo senha deve ser preenchido" });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const user = await connection("users")
+      .insert({
+        name,
+        email,
+        password: passwordHash,
+      })
+      .returning("*");
+    console.log(user);
+
+    if (!user[0]) {
+      return res.status(500).json({ message: "Erro interno do servidor" });
+    }
+
+    return res.status(201).json({ message: "Usuário cadastrado com sucesso." });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({ message: "Erro ao cadastrar usuário" });
   }
 };
@@ -67,6 +95,8 @@ const putUser = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "Erro ao atualizar o usuário" });
     }
+
+    req.user = user;
 
     return res.status(200).json("Usuário atualizado com sucesso!");
   } catch (error) {
