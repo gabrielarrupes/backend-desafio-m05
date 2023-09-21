@@ -26,7 +26,7 @@ const userSchema = joi.object({
 
   telephone: joi.string().pattern(/^\d+$/).messages({
     "string.pattern.base": "O telefone deve conter apenas números",
-    "string.empty": "O campo nome é obrigatório",
+    "string.empty": "O campo telephone é obrigatório",
   }),
 
   password: joi
