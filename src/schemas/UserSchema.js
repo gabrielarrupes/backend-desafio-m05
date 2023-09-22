@@ -26,7 +26,7 @@ const userSchema = joi.object({
 
   telephone: joi.string().pattern(/^\d+$/).messages({
     "string.pattern.base": "O telefone deve conter apenas números",
-    "string.empty": "O campo telephone é obrigatório",
+    "string.empty": "O campo nome é obrigatório",
   }),
 
   password: joi
@@ -42,6 +42,17 @@ const userSchema = joi.object({
       "string.pattern.base":
         "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
     }),
+
+  repeatedPassword: joi
+    .string()
+    .required()
+
+    .messages({
+      "any-required": "O campo Repita Senha é obrigatório",
+      "string.empty": "O campo Repita Senha é obrigatório",
+    }),
+
+  activeStep: joi.number(),
 });
 
 module.exports = { userSchema };
