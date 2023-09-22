@@ -19,9 +19,9 @@ const UserRegistrationValidation = (joiSchema) => async (req, res, next) => {
     next();
   }
 
-  // if (req.body.email && req.body.name && req.body.password) {
-  //   next();
-  // }
+  if (req.body.email && req.body.name && req.body.password) {
+    next();
+  }
 };
 
 module.exports = UserRegistrationValidation;

@@ -31,4 +31,15 @@ const postCharge = async (req, res) => {
     }
 };
 
-module.exports = { postCharge }
+const getCharge = async (req, res) => {
+    const { id } = req.charge;
+    try {
+        const charge = await connection("charge").where({ id }).first();
+
+        return res.status(200).json(charge);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = { postCharge, getCharge }

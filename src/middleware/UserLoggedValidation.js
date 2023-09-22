@@ -13,7 +13,7 @@ const UserLoggedValidation = async (req, res, next) => {
 
     const id = jwt.verify(token, process.env.JWT_PASS);
 
-    const userExists = await connection("users").select().where({ id }).first();
+    const userExists = await connection("users").where({ id }).first();
 
     if (!userExists) {
       return res.status(404).json("Usuário não cadastrado");
