@@ -539,6 +539,90 @@ Status 404 (Not Found) - Validação de ID:
 > { "message": "Cobrança não encontrada." }
 
 ---
+# Endpoint Edição de Cliente
+
+- **Edição de cliente**: `PUT /customer/:id`
+
+### Dados de Entrada
+
+- Para editar um cliente existente, você pode fornecer os seguintes dados:
+
+- `id_responsable`\*: Esse dado é fornecido automáticamente de acordo com o token do usuário logado.
+- `nome`\*: Nome do cliente (deve conter apenas letras).
+- `email`\*: Endereço de e-mail válido (não pode já haver o mesmo e-mail de cliente cadastrado).
+- `telephone`\*: Número de telefone (apenas números).
+- `cep`\*: CEP válido com no máximo 8 caracteres (apenas números).
+- `logradouro`\*: Logradouro (deve ser obrigatório).
+- `complemento`\*: Complemento (não é obrigatório).
+- `bairro`\*: Bairro (obrigatório).
+- `cidade`\*: Cidade (obrigatória).
+- `estado`\*: Estado (obrigatório e somente letras).
+
+## Exemplo de Requisição
+
+- Aqui está um exemplo de como fazer uma requisição para editar um cliente existente:
+
+- **O usuário deve estar autenticado para poder fazer a alteração das informaçõesdo cliente**
+
+  - Não precisa enviar o ID do usuário na rota pois o ID é validado pelo token do usuário logado
+
+> PUT /customer/1
+> Content-Type: application/json
+>
+> headers: {
+> 'Authorization': `Bearer ${token}`
+> };
+>
+>{
+>"name": "teste maria",
+> "email": "teste4@email.com",
+> "cep": "47862612",
+>"cpf":"12345600080",
+>"telephone":"1268972",
+>"logradouro":"bem ali",
+>"complemento":"na casa",
+>"bairro": "qualquer",
+>"cidade":"qualqueruma",
+>"estado":"feliz"
+>}
+
+**Respostas:**
+
+Sucesso (Status 200):
+
+- Se todas as validações forem bem-sucedidas, o usuário será atualizado e a API retornará uma mensagem de sucesso:
+
+> {"message": "cliente atualizado com sucesso!"}
+
+**Erros Possíveis:**
+
+- A API retornará mensagens de erro específicas para cada validação não atendida. Aqui estão alguns exemplos:
+
+Status 400 (Bad Request) - Nenhum dado foi alterado:
+
+> {"message": "Ao menos um campo deve ser alterado."}
+
+Status 400 (Bad Request) - Validação de Nome:
+
+> {"message": "Nome deve conter apenas letras e espaços."}
+
+Status 400 (Bad Request) - Validação de E-mail:
+
+> {"message": "Endereço de e-mail inválido."}
+
+Status 400 (Bad Request) - E-mail já registrado:
+
+> {"message": "Email já está registrado."}
+
+Status 400 (Bad Request) - Validação de CPF:
+
+> {"message": "CPF inválido. Deve conter exatamente 11 dígitos."}
+
+Status 400 (Bad Request) - Validação de Telefone:
+
+> {"message": "O campo telefone deve conter apenas números."}
+
+---
 
 ## Autor:
 
