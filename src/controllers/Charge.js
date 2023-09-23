@@ -2,8 +2,9 @@ const connection = require("../services/connection");
 
 
 const postCharge = async (req, res) => {
-    const { id } = req.customers;
+
     const {
+        idcustomer,
         value,
         duedate,
         status,
@@ -12,7 +13,7 @@ const postCharge = async (req, res) => {
 
     try {
         const charge = await connection("charge").insert({
-            idCustomer: id,
+            idcustomer,
             value,
             duedate,
             status,
@@ -20,9 +21,7 @@ const postCharge = async (req, res) => {
         });
 
         if (!charge) {
-            return res
-                .status(400)
-                .json("Não foi possível concluir o cadastro de cobrança");
+            return res.status(400).json("Não foi possível concluir o cadastro de cobrança");
         }
 
         return res.status(201).json("Cobrança cadastrada com sucesso.");
@@ -32,14 +31,20 @@ const postCharge = async (req, res) => {
 };
 
 const getCharge = async (req, res) => {
-    const { id } = req.charge;
+    const idcustomer = req.params.id;
     try {
-        const charge = await connection("charge").where({ id }).first();
+        const charge = await connection("charge").where({ idcustomer });
+
+        if (!charge) {
+            return res.status(404).json("Cobrança não encontrada!");
+        }
 
         return res.status(200).json(charge);
     } catch (error) {
         console.log(error);
     }
 }
+
+
 
 module.exports = { postCharge, getCharge }

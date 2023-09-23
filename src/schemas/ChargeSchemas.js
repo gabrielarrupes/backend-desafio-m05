@@ -1,7 +1,11 @@
 const joi = require("joi");
 
-
 const chargeSchemas = joi.object({
+    idcustomer: joi
+        .number()
+        .positive()
+        .required(),
+
     value: joi
         .number()
         .positive()
@@ -9,13 +13,15 @@ const chargeSchemas = joi.object({
         .messages({
             "any.required": "O campo valor é obrigatório",
             "number.empty": "O valor não pode estar vazio",
+            "number.base": "O campo valor precisa ser um número",
+            "number.positive": "O campo valor precisa ser um número positivo"
         }),
 
     duedate: joi
-        .date()
+        .string()
         .required()
         .messages({
-            "any.required": "O campo data de vencimento é obrigatória",
+            "any.required": "O campo data de vencimento é obrigatório",
             "date.empty": "A data não pode estar vazia",
         }),
 
@@ -35,7 +41,8 @@ const chargeSchemas = joi.object({
             "boolean.empty": "A descrição não pode estar vazia",
         }),
 
-
 });
+
+
 
 module.exports = { chargeSchemas }
