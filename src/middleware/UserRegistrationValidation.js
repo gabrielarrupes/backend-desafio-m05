@@ -1,5 +1,5 @@
 const UserRegistrationValidation = (joiSchema) => async (req, res, next) => {
-  if (req.body.password !== "" && req.body.activeStep === 1) {
+  if (req.body.activeStep === 1) {
     try {
       await joiSchema.validateAsync(req.body);
 
