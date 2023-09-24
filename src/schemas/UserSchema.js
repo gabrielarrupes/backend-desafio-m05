@@ -3,12 +3,13 @@ const joi = require("joi");
 const userSchema = joi.object({
   name: joi
     .string()
+    .required()
     .pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/)
     .messages({
       "string.base": "O nome deve conter apenas letras",
-      "string.empty": "O campo nome é obrigatório",
+      "string.empty": "O campo nome é obrigatório esse de ca",
       "string.pattern.base": "o nome deve conter apenas letras",
-      "any.required": "o campo nome é obrigatório",
+      "any.required": "o campo nome é obrigatório é aqui",
     }),
 
   email: joi.string().email().required().messages({
@@ -42,6 +43,16 @@ const userSchema = joi.object({
       "string.pattern.base":
         "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
     }),
+
+  repeatedPassword: joi
+    .string()
+    .required()
+    .messages({
+      "any-required": "O campo Repita Senha é obrigatório",
+      "string.empty": "O campo Repita Senha é obrigatório",
+    }),
+
+  activeStep: joi.number(),
 });
 
 module.exports = { userSchema };

@@ -58,4 +58,5 @@ const customerSchema = joi.object({
   }),
 });
 
+
 module.exports = { customerSchema };

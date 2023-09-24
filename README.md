@@ -342,6 +342,288 @@ Status 400 (Bad Request) - Validação de Estado:
 
 ---
 
+# Listagem de Clientes
+
+- **Listagem de Cliente**: `GET /customer`
+
+## Dados de Entrada
+
+- **O usuário deve estar autenticado para poder fazer o get de clientes**
+
+  - Não precisa enviar o ID do cliente na rota pois o ID do responsável pelos cliente é validado pelo token do usuário logado
+
+## Exemplo de Requisição
+  > GET /customer
+> Content-Type: application/json
+> headers: {
+> 'Authorization': `Bearer ${token}`
+> };
+
+**Respostas:**
+Sucesso (Status 200):
+		{
+			"id": 1,
+			"id_responsable": 58,
+			"name": "teste",
+			"email": "teste@email.com",
+			"cpf": "12345678912",
+			"telephone": "77998050515",
+			"cep": "47862612",
+			"logradouro": "bem ali",
+			"complemento": "na casa",
+			"bairro": "qualquer",
+			"cidade": "qualqueruma",
+			"estado": "feliz",
+			"status": true
+		}
+**Erros Possíveis:**
+
+- A API retornará mensagens de erro específicas para cada validação não atendida. Aqui estão alguns exemplos:
+
+Status 404 (Not Found) - Validação de ID:
+
+> { "message": "Cliente não encontrado." }
+
+---
+
+# Listagem de Cliente especifico
+
+- **Listagem de Cliente por ID**: `GET /customer/:id`
+
+## Dados de Entrada
+
+- **O usuário deve estar autenticado para poder fazer o get de clientes**
+
+  - Enviar o id do cliente no params para ver os dados.
+
+## Exemplo de Requisição
+  > GET /customer/1
+> Content-Type: application/json
+> headers: {
+> 'Authorization': `Bearer ${token}`
+> };
+
+**Respostas:**
+Sucesso (Status 200):
+	{
+	"id": 2,
+	"id_responsable": 58,
+	"name": "teste",
+	"email": "teste8@email.com",
+	"cpf": "12345678910",
+	"telephone": "77998050515",
+	"cep": "47862612",
+	"logradouro": "bem ali",
+	"complemento": "na casa",
+	"bairro": "qualquer",
+	"cidade": "qualqueruma",
+	"estado": "feliz"
+}
+**Erros Possíveis:**
+
+- A API retornará mensagens de erro específicas para cada validação não atendida. Aqui estão alguns exemplos:
+
+Status 404 (Not Found) - Validação de ID:
+
+> { "message": "Cliente não encontrado." }
+
+---
+
+# Cadastro de Cobrança
+
+- **Cadastro de Cobrança**: `POST /charge`
+
+## Dados de Entrada
+
+- Para cadastrar uma nova cobrança, você deve fornecer os seguintes dados:
+
+- `idCustomer`\*: Esse dado deve ser enviado de acordo ao cliente que for feita a cobrança (deve ser obrigatório).
+- `value`\*: valor da cobraça (deve conter apenas numeros positivos)(deve ser obrigatório).
+- `duedate`\*: data de vencimento (deve ser obrigatório).
+- `status`\*: deve ser true ou false (deve ser obrigatório).
+- `description`\*: descrição da cobrança deve ser uma string (deve ser obrigatório).
+
+## Exemplo de Requisição
+
+- Aqui está um exemplo de como fazer uma requisição para cadastrar uma nova cobrança:
+
+- **O usuário deve estar autenticado para poder cadastrar umam nova cobrança**
+
+> POST /charge
+> Content-Type: application/json
+>
+> headers: {
+> 'Authorization': `Bearer ${token}`
+> };
+>{
+>"idcustomer": "2"
+>"value": 123,
+> "duedate": "10/03/2020",
+>"status": "false",
+>"description":"pagamento"	
+>}
+
+**Respostas:**
+
+Sucesso (Status 201):
+
+Se todas as validações forem bem-sucedidas, o cobrança será cadastrado e a API retornará uma mensagem de sucesso:
+
+> {"message": "Cobrança cadastrado com sucesso!"}
+
+Erros Possíveis:
+
+A API retornará mensagens de erro específicas para cada validação não atendida. Aqui estão alguns exemplos:
+
+Status 400 (Bad Request) - Validação do value:
+
+> {"message": "Valor deve conter apenas numeros positivos."}
+
+Status 400 (Bad Request) - Verificação existência do status:
+
+> {"message": "o status deve ser boolean"}
+
+Status 400 (Bad Request) - Validação de description:
+
+> {"message": "O campo descrição deve conter apenas letras e espaços"}
+
+Status 400 (Bad Request) - Validação de duedate:
+
+> {"message": "O campo data de vencimento deve ser uma data valida"}
+
+---
+
+# Listagem de Cobranças
+
+- **Listagem de Cobranças**: `GET /charge/:id`
+
+## Dados de Entrada
+
+- **O usuário deve estar autenticado para poder fazer o get de cobranças**
+
+  - Enviar o id do cliente no params para ver todas as cobranças relacionadas a ele.
+
+## Exemplo de Requisição
+  > GET /charge/1
+> Content-Type: application/json
+> headers: {
+> 'Authorization': `Bearer ${token}`
+> };
+
+**Respostas:**
+Sucesso (Status 200):
+[
+	{
+		"id": 5,
+		"idcustomer": 2,
+		"value": 20000,
+		"duedate": "2000-10-07T03:00:00.000Z",
+		"status": true,
+		"description": "pagamento realizado"
+	},
+	{
+		"id": 8,
+		"idcustomer": 2,
+		"value": 50000,
+		"duedate": "2000-10-07T03:00:00.000Z",
+		"status": false,
+		"description": "pagamento programado"
+	}
+]
+**Erros Possíveis:**
+
+- A API retornará mensagens de erro específicas para cada validação não atendida. Aqui estão alguns exemplos:
+
+Status 404 (Not Found) - Validação de ID:
+
+> { "message": "Cobrança não encontrada." }
+
+---
+# Endpoint Edição de Cliente
+
+- **Edição de cliente**: `PUT /customer/:id`
+
+### Dados de Entrada
+
+- Para editar um cliente existente, você pode fornecer os seguintes dados:
+
+- `id_responsable`\*: Esse dado é fornecido automáticamente de acordo com o token do usuário logado.
+- `nome`\*: Nome do cliente (deve conter apenas letras).
+- `email`\*: Endereço de e-mail válido (não pode já haver o mesmo e-mail de cliente cadastrado).
+- `telephone`\*: Número de telefone (apenas números).
+- `cep`\*: CEP válido com no máximo 8 caracteres (apenas números).
+- `logradouro`\*: Logradouro (deve ser obrigatório).
+- `complemento`\*: Complemento (não é obrigatório).
+- `bairro`\*: Bairro (obrigatório).
+- `cidade`\*: Cidade (obrigatória).
+- `estado`\*: Estado (obrigatório e somente letras).
+
+## Exemplo de Requisição
+
+- Aqui está um exemplo de como fazer uma requisição para editar um cliente existente:
+
+- **O usuário deve estar autenticado para poder fazer a alteração das informaçõesdo cliente**
+
+  - Não precisa enviar o ID do usuário na rota pois o ID é validado pelo token do usuário logado
+
+> PUT /customer/1
+> Content-Type: application/json
+>
+> headers: {
+> 'Authorization': `Bearer ${token}`
+> };
+>
+>{
+>"name": "teste maria",
+> "email": "teste4@email.com",
+> "cep": "47862612",
+>"cpf":"12345600080",
+>"telephone":"1268972",
+>"logradouro":"bem ali",
+>"complemento":"na casa",
+>"bairro": "qualquer",
+>"cidade":"qualqueruma",
+>"estado":"feliz"
+>}
+
+**Respostas:**
+
+Sucesso (Status 200):
+
+- Se todas as validações forem bem-sucedidas, o usuário será atualizado e a API retornará uma mensagem de sucesso:
+
+> {"message": "cliente atualizado com sucesso!"}
+
+**Erros Possíveis:**
+
+- A API retornará mensagens de erro específicas para cada validação não atendida. Aqui estão alguns exemplos:
+
+Status 400 (Bad Request) - Nenhum dado foi alterado:
+
+> {"message": "Ao menos um campo deve ser alterado."}
+
+Status 400 (Bad Request) - Validação de Nome:
+
+> {"message": "Nome deve conter apenas letras e espaços."}
+
+Status 400 (Bad Request) - Validação de E-mail:
+
+> {"message": "Endereço de e-mail inválido."}
+
+Status 400 (Bad Request) - E-mail já registrado:
+
+> {"message": "Email já está registrado."}
+
+Status 400 (Bad Request) - Validação de CPF:
+
+> {"message": "CPF inválido. Deve conter exatamente 11 dígitos."}
+
+Status 400 (Bad Request) - Validação de Telefone:
+
+> {"message": "O campo telefone deve conter apenas números."}
+
+---
+
 ## Autor:
 
 **_Equipe Garotos de Progarama_**

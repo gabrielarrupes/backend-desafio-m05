@@ -1,11 +1,25 @@
-const existsInDatabase = require("../utils/existsInDatabase.js");
 const UserRegistrationValidation = (joiSchema) => async (req, res, next) => {
-  try {
-    await joiSchema.validateAsync(req.body);
-    await existsInDatabase(req, "users");
+  if (req.body.password !== "" && req.body.activeStep === 1) {
+
+    try {
+      await joiSchema.validateAsync(req.body);
+
+      next();
+    } catch (error) {
+      console.log(error);
+      return res.status(400).json({ message: error.message });
+    }
+  }
+
+  if (req.body.email && req.body.password === "") {
     next();
-  } catch (error) {
-    return res.status(400).json({ message: error.message });
+  }
+  if (!req.body.email || !req.body.name) {
+    next();
+  }
+
+  if (req.body.email && req.body.name && req.body.password) {
+    next();
   }
 };
 
