@@ -1,9 +1,8 @@
 const bcrypt = require("bcrypt");
 const connection = require("../services/connection");
 
-
 const postUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, activeStep } = req.body;
 
   if (!name) {
     return res.status(400).json({ message: "O campo nome é obrigatório" });
