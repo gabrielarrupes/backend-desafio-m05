@@ -45,14 +45,13 @@ const postCustomer = async (req, res) => {
 const getCustomer = async (req, res) => {
 
   try {
-    const result = await connection("customers").select("customers.*", "charge.status")
-      .join("charge", "customers.id", "charge.idcustomer")
+    const result = await connection("customers");
 
     return res.status(200).json({ result });
   } catch (error) {
     return res.status(500).json({ message: "Erro interno do servidor" });
   }
-};
+}
 
 const getCustomerId = async (req, res) => {
 
@@ -84,8 +83,8 @@ const putCustomer = async (req, res) => {
     cidade,
     estado,
   } = req.body;
-  const { id } = req.params.id;
-
+  const { id } = req.params;
+  console.log(id);
   try {
 
     const emailExistsInDatabase = await connection("customers").where({ email }).first();
@@ -93,13 +92,13 @@ const putCustomer = async (req, res) => {
     if (emailExistsInDatabase) {
       return res.status(400).json({ message: "Email já cadastrado" });
     }
-    const customerExist = await connection("customers").where({ id }).frist()
+    const customerExist = await connection("customers").where({ id }).first()
     if (!customerExist) {
       return res.status(400).json({ message: "Cliente não encontrado" });
     }
+
     const customerUpdate = await connection("customers").where({ id })
       .update({
-        ...id_responsable,
         name,
         email,
         cpf,
@@ -110,13 +109,12 @@ const putCustomer = async (req, res) => {
         bairro,
         cidade,
         estado,
-      });
+      }).returning("*");
 
     if (!customerUpdate) {
       return res.status(400).json({ message: "Erro ao atualizar o Cliente" });
     }
-
-    return res.status(204).json("Usuário atualizado com sucesso!");
+    return res.status(200).json({ message: "Usuário atualizado com sucesso!" });
   } catch (error) {
     return res.status(500).json("Erro interno do servidor");
   }
