@@ -19,10 +19,10 @@ const userSchema = joi.object({
     "any.required": "O campo email é obrigatório",
   }),
 
-  cpf: joi.string().min(11).max(11).pattern(/^\d+$/).messages({
-    "string.min": "O CPF deve conter 11 números",
+  cpf: joi.string().length(14).required().messages({
+    "string.length": "O cpf deve ter exatamente 11 caracteres",
     "string.pattern.base": "O cpf deve conter apenas números",
-    "string.max": "O CPF deve conter apenas 11 números",
+    "any.required": "O cpf é obrigatório",
   }),
 
   telephone: joi.string().pattern(/^\d+$/).messages({
@@ -44,13 +44,10 @@ const userSchema = joi.object({
         "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
     }),
 
-  repeatedPassword: joi
-    .string()
-    .required()
-    .messages({
-      "any-required": "O campo Repita Senha é obrigatório",
-      "string.empty": "O campo Repita Senha é obrigatório",
-    }),
+  repeatedPassword: joi.string().required().messages({
+    "any-required": "O campo Repita Senha é obrigatório",
+    "string.empty": "O campo Repita Senha é obrigatório",
+  }),
 
   activeStep: joi.number(),
 });
