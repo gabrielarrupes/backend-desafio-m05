@@ -45,14 +45,13 @@ const postCustomer = async (req, res) => {
 const getCustomer = async (req, res) => {
 
   try {
-    const result = await connection("customers").select("customers.*", "charge.status")
-      .join("charge", "customers.id", "charge.idcustomer")
+    const result = await connection("customers");
 
     return res.status(200).json({ result });
   } catch (error) {
     return res.status(500).json({ message: "Erro interno do servidor" });
   }
-};
+}
 
 const getCustomerId = async (req, res) => {
 

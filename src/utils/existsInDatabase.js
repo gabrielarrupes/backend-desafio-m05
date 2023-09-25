@@ -22,4 +22,5 @@ const existsInDatabase = async (req, database) => {
   }
 };
 
+
 module.exports = existsInDatabase;
