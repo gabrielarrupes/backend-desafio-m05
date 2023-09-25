@@ -17,7 +17,8 @@ const customerSchema = joi.object({
     "any.required": "O email é obrigatório",
   }),
 
-  cep: joi.string().max(8).pattern(/^\d+$/).messages({
+  cep: joi.string().max(8).pattern(/^\d+$/).required().messages({
+    "any.required": "O cep é obrigatório",
     "string.max": "O cep deve ter no máximo 8 caracteres",
     "string.pattern.base": "O cep deve conter apenas números",
   }),

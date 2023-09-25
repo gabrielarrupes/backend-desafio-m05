@@ -30,7 +30,7 @@ const postCharge = async (req, res) => {
     }
 };
 
-const getCharge = async (req, res) => {
+const getChargeId = async (req, res) => {
     const idcustomer = req.params.id;
     try {
         const charge = await connection("charge").where({ idcustomer });
@@ -44,7 +44,17 @@ const getCharge = async (req, res) => {
         console.log(error);
     }
 }
+const getCharge = async (req, res) => {
+
+    try {
+        const result = await connection("charge")
+
+        return res.status(200).json({ result });
+    } catch (error) {
+        return res.status(500).json({ message: "Erro interno do servidor" });
+    }
+}
 
 
 
-module.exports = { postCharge, getCharge }
+module.exports = { postCharge, getChargeId, getCharge }

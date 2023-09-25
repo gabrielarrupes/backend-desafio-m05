@@ -45,7 +45,7 @@ const postCustomer = async (req, res) => {
 const getCustomer = async (req, res) => {
 
   try {
-    const result = await connection("customers");
+    const result = await connection("customers")
 
     return res.status(200).json({ result });
   } catch (error) {
