@@ -49,13 +49,18 @@ const getChargeId = async (req, res) => {
 const getCharge = async (req, res) => {
 
     try {
-        const charge = await connection("charge")
+        const charge = await connection.select(
+            'charge.*',
+            'customers.*'
+        )
+            .from('charge')
+            .join('customers', 'charge.idcustomer', 'customers.id');
 
         if (!charge) {
             return res.status(404).json("Cobrança não encontrada!");
         }
 
-        return res.status(200).json(newRetorno);
+        return res.status(200).json(charge);
     } catch (error) {
         console.log(error);
     }
