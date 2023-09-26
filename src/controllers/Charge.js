@@ -30,7 +30,7 @@ const postCharge = async (req, res) => {
     }
 };
 
-const getCharge = async (req, res) => {
+const getChargeId = async (req, res) => {
     const idcustomer = req.params.id;
     try {
         const charge = await connection("charge").where({ idcustomer });
@@ -46,5 +46,20 @@ const getCharge = async (req, res) => {
 }
 
 
+const getCharge = async (req, res) => {
 
-module.exports = { postCharge, getCharge }
+    try {
+        const charge = await connection("charge")
+
+        if (!charge) {
+            return res.status(404).json("Cobrança não encontrada!");
+        }
+
+        return res.status(200).json(newRetorno);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+module.exports = { postCharge, getCharge, getChargeId }

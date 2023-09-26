@@ -21,8 +21,7 @@ const customerSchema = joi.object({
     "string.max": "O cep deve ter no máximo 8 caracteres",
     "string.pattern.base": "O cep deve conter apenas números",
   }),
-  cpf: joi.string().length(11).pattern(/^\d+$/).required().messages({
-    "string.length": "O cpf deve ter exatamente 11 caracteres",
+  cpf: joi.string().regex(/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/).required().messages({
     "string.pattern.base": "O cpf deve conter apenas números",
     "any.required": "O cpf é obrigatório",
   }),
