@@ -1,15 +1,15 @@
 const express = require("express");
 
 const Login = require("../controllers/Login");
-const { postUser, putUser, getUser } = require("../controllers/user");
+const { postUser, putUser, getUser } = require("../controllers/User");
 const { postCustomer, getCustomer, getCustomerId, putCustomer } = require("../controllers/Customer");
 const { postCharge, getCharge, getChargeId } = require("../controllers/Charge");
 
 const { userSchema } = require("../schemas/UserSchema");
 const { userUpdateSchema } = require("../schemas/UserUpdateSchema");
 const { customerSchema } = require("../schemas/CustomerSchema");
-const { chargeSchemas } = require("../schemas/chargeSchemas");
-const { customerUpdateSchema } = require("../schemas/customerUpdateSchema");
+const { chargeSchemas } = require("../schemas/ChargeSchemas");
+const { customerUpdateSchema } = require("../schemas/CustomerUpdateSchema");
 
 const UserRegistrationValidation = require("../middleware/UserRegistrationValidation");
 const UserLoggedValidation = require("../middleware/UserLoggedValidation");
