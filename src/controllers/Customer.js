@@ -45,14 +45,13 @@ const postCustomer = async (req, res) => {
 const getCustomer = async (req, res) => {
 
   try {
-    const result = await connection("customers").select("customers.*", "charge.status")
-      .join("charge", "customers.id", "charge.idcustomer")
+    const result = await connection("customers");
 
     return res.status(200).json({ result });
   } catch (error) {
     return res.status(500).json({ message: "Erro interno do servidor" });
   }
-};
+}
 
 const getCustomerId = async (req, res) => {
 
@@ -85,17 +84,22 @@ const putCustomer = async (req, res) => {
     estado,
   } = req.body;
   const { id } = req.params;
-  console.log(id);
+
   try {
 
-    const emailExistsInDatabase = await connection("customers").where({ email }).first();
-
-    if (emailExistsInDatabase) {
-      return res.status(400).json({ message: "Email já cadastrado" });
-    }
     const customerExist = await connection("customers").where({ id }).first()
     if (!customerExist) {
       return res.status(400).json({ message: "Cliente não encontrado" });
+    }
+
+    const newEmail = req.body.email
+    if (newEmail !== customerExist.email) {
+
+      const emailExistsInDatabase = await connection("customers").where({ email }).first();
+
+      if (emailExistsInDatabase) {
+        return res.status(400).json({ message: "Email já cadastrado" });
+      }
     }
 
     const customerUpdate = await connection("customers").where({ id })

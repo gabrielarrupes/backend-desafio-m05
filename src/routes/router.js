@@ -3,7 +3,7 @@ const express = require("express");
 const Login = require("../controllers/Login");
 const { postUser, putUser, getUser } = require("../controllers/user");
 const { postCustomer, getCustomer, getCustomerId, putCustomer } = require("../controllers/Customer");
-const { postCharge, getCharge } = require("../controllers/Charge");
+const { postCharge, getCharge, getChargeId } = require("../controllers/Charge");
 
 const { userSchema } = require("../schemas/UserSchema");
 const { userUpdateSchema } = require("../schemas/UserUpdateSchema");
@@ -40,7 +40,9 @@ router.get("/customer/:id", getCustomerId);
 
 router.post("/charge", ChargeRegistrationValidation(chargeSchemas), postCharge);
 
-router.get("/charge/:id", getCharge);
+router.get("/charge/:id", getChargeId);
+
+router.get("/charge", getCharge);
 
 router.put('/customer/:id', CustomerUpdateValidation(customerUpdateSchema), putCustomer);
 

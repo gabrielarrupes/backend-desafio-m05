@@ -15,7 +15,7 @@ const userUpdateSchema = joi.object({
       "O e-mail deve ter um formato válido, exemplo: email@email.com",
   }),
 
-  cpf: joi.string().min(0).max(11).messages({
+  cpf: joi.string().min(11).pattern(/^\d+$/).messages({
     "string.min": "O CPF deve conter 11 números",
     "string.pattern.base": "O cpf deve conter apenas números",
     "string.max": "O CPF deve conter apenas 11 números",
