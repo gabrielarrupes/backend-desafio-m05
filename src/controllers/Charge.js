@@ -51,7 +51,7 @@ const getCharge = async (req, res) => {
     try {
         const charge = await connection.select(
             'charge.*',
-            'customers.*'
+            'customers.name'
         )
             .from('charge')
             .join('customers', 'charge.idcustomer', 'customers.id');

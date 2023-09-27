@@ -3,13 +3,11 @@ const joi = require("joi");
 const userSchema = joi.object({
   name: joi
     .string()
-    .required()
-    .pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ\s]*$/)
+    .regex(/^[a-zA-Z\s]*$/)
     .messages({
-      "string.base": "O nome deve conter apenas letras",
-      "string.empty": "O campo nome é obrigatório esse de ca",
-      "string.pattern.base": "o nome deve conter apenas letras",
-      "any.required": "o campo nome é obrigatório é aqui",
+      "string.base": "O nome deve conter apenas letras e espaços",
+      "string.empty": "O campo nome é obrigatório",
+      "any.required": "o campo nome é obrigatório",
     }),
 
   email: joi.string().email().required().messages({
@@ -19,7 +17,7 @@ const userSchema = joi.object({
     "any.required": "O campo email é obrigatório",
   }),
 
-  cpf: joi.string().regex(/^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$/).messages({
+  cpf: joi.string().min(11).pattern(/^\d+$/).messages({
     "string.min": "O CPF deve conter 11 números",
     "string.pattern.base": "O cpf deve conter apenas números",
     "string.max": "O CPF deve conter apenas 11 números",
@@ -33,14 +31,14 @@ const userSchema = joi.object({
   password: joi
     .string()
     .min(8)
-    .pattern(/^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])/)
+    .regex(/^(?=.*[A-Z])(?=.*[!@#$%^&*])/)
     .required()
     .messages({
       "string.empty": "O campo Senha é obrigatório",
       "any-required": "O campo senha é obrigatório",
       "string.min":
         "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
-      "string.pattern.base":
+      "string.regex.base":
         "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
     }),
 

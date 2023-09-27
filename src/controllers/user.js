@@ -3,7 +3,6 @@ const connection = require("../services/connection");
 
 const postUser = async (req, res) => {
   const { name, email, password, activeStep } = req.body;
-  console.log("oi");
 
   if (!name) {
     return res.status(400).json({ message: "O campo nome é obrigatório" });
@@ -21,9 +20,7 @@ const postUser = async (req, res) => {
       if (emailExistsInDatabase) {
         return res.status(400).json({ message: "Email já cadastrado" });
       }
-      if (!emailExistsInDatabase) {
-        return res.status(200).json({ message: "certo" });
-      }
+
     }
 
     if (activeStep === 1 && password === "") {
@@ -41,7 +38,7 @@ const postUser = async (req, res) => {
         password: passwordHash,
       })
       .returning("*");
-    //console.log(user);
+
     const { senha: _, ...userPost } = user[0];
     if (!user[0]) {
       return res.status(500).json({ message: "Erro interno do servidor" });
@@ -68,7 +65,7 @@ const getUser = async (req, res) => {
 const putUser = async (req, res) => {
   const { id } = req.user;
   const { name, email, cpf, telephone, password } = req.body;
-
+  const { emailUser } = req.user
   let passwordHash = password;
 
   let currentCpf = cpf || "";
@@ -78,6 +75,16 @@ const putUser = async (req, res) => {
   }
 
   try {
+    const newEmail = req.body.email
+    if (newEmail !== emailUser.email) {
+
+      const emailExistsInDatabase = await connection("users").where({ email }).first();
+
+      if (emailExistsInDatabase) {
+        return res.status(400).json({ message: "Email já cadastrado" });
+      }
+    }
+
     const user = await connection("users")
       .where({ id })
       .update({
