@@ -45,7 +45,7 @@ const postCustomer = async (req, res) => {
 const getCustomer = async (req, res) => {
 
   try {
-    const result = await connection("customers");
+    const result = await connection("customers")
 
     return res.status(200).json({ result });
   } catch (error) {
@@ -99,6 +99,16 @@ const putCustomer = async (req, res) => {
 
       if (emailExistsInDatabase) {
         return res.status(400).json({ message: "Email já cadastrado" });
+      }
+    }
+
+    const newCPF = req.body.cpf
+    if (newCPF !== customerExist.cpf) {
+
+      const cpfExistsInDatabase = await connection("customers").where({ cpf }).first();
+
+      if (cpfExistsInDatabase) {
+        return res.status(400).json({ message: "CPF já cadastrado" });
       }
     }
 

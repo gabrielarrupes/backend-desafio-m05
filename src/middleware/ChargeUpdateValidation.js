@@ -1,5 +1,4 @@
-
-const CustomerUpdateValidation = (joiSchema) => async (req, res, next) => {
+const ChargeUpdateValidation = (joiSchema) => async (req, res, next) => {
     try {
         await joiSchema.validateAsync(req.body);
         next();
@@ -8,4 +7,4 @@ const CustomerUpdateValidation = (joiSchema) => async (req, res, next) => {
     }
 };
 
-module.exports = CustomerUpdateValidation
+module.exports = ChargeUpdateValidation
