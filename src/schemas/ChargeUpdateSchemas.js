@@ -1,15 +1,7 @@
 const joi = require("joi");
 
-const chargeSchemas = joi.object({
-    idcustomer: joi
-        .number()
-        .positive()
-        .required()
-        .messages({
-            "any.required": "O campo idcustomer é obrigatório",
-            "number.base": "O campo idcustomer precisa ser um número",
+const chargeUpdateSchemas = joi.object({
 
-        }),
     value: joi
         .number()
         .positive()
@@ -34,7 +26,7 @@ const chargeSchemas = joi.object({
         .required()
         .messages({
             "any.required": "O campo status é obrigatório",
-            "boolean.base": "O status não pode estar vazio",
+            "boolean.empty": "O status não pode estar vazio",
         }),
 
     description: joi
@@ -49,4 +41,4 @@ const chargeSchemas = joi.object({
 
 
 
-module.exports = { chargeSchemas }
+module.exports = { chargeUpdateSchemas }
