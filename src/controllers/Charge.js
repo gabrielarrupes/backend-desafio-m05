@@ -33,7 +33,7 @@ const postCharge = async (req, res) => {
 const getChargeId = async (req, res) => {
     try {
         const { id } = req.params;
-        const chargeId = await connection("charge").where('id', id).first();
+        const chargeId = await connection("charge").where({ idcustomer: id });
 
         if (!chargeId) {
             return res.status(404).json({ mesagem: "Cobrança não encontrada" })

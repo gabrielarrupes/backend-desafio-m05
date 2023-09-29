@@ -4,6 +4,7 @@ const userSchema = joi.object({
   name: joi
     .string()
     .regex(/^[a-zA-Z\s]*$/)
+    .required()
     .messages({
       "string.base": "O nome deve conter apenas letras e espaços",
       "string.empty": "O campo nome é obrigatório",
