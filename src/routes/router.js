@@ -1,7 +1,7 @@
 const express = require("express");
 
 const Login = require("../controllers/Login");
-const { postUser, putUser, getUser } = require("../controllers/User");
+const { postUser, putUser, getUser } = require("../controllers/user");
 const { postCustomer, getCustomer, getCustomerId, putCustomer } = require("../controllers/Customer");
 const { postCharge, getCharge, getChargeId, putCharge, deleteCharge } = require("../controllers/Charge");
 

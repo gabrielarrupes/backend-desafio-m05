@@ -17,11 +17,6 @@ const customerUpdateSchema = joi.object({
         "any.required": "O email é obrigatório",
     }),
 
-    cep: joi.string().max(8).pattern(/^\d+$/).required().messages({
-        "string.max": "O cep deve ter no máximo 8 caracteres",
-        "string.pattern.base": "O cep deve conter apenas números",
-        "any.required": "O CEP é obrigatório"
-    }),
     cpf: joi.string().min(11).max(11).pattern(/^\d+$/).required().messages({
         "string.min": "O CPF deve conter 11 números",
         "string.pattern.base": "O cpf deve conter apenas números",
@@ -42,6 +37,12 @@ const customerUpdateSchema = joi.object({
     complemento: joi.string().required().messages({
         "string.empty": "O complemento não pode estar vazio",
         "any.required": "O complemento é obrigatório",
+    }),
+
+    cep: joi.string().max(8).pattern(/^\d+$/).required().messages({
+        "string.max": "O cep deve ter no máximo 8 caracteres",
+        "string.pattern.base": "O cep deve conter apenas números",
+        "any.required": "O CEP é obrigatório"
     }),
 
     bairro: joi.string().required().messages({
