@@ -10,15 +10,13 @@ const chargeSchemas = joi.object({
             "number.base": "O campo idcustomer precisa ser um número",
 
         }),
-    value: joi
-        .number()
-        .positive()
+
+    description: joi
+        .string()
         .required()
         .messages({
-            "any.required": "O campo valor é obrigatório",
-            "number.empty": "O valor não pode estar vazio",
-            "number.base": "O campo valor precisa ser um número",
-            "number.positive": "O campo valor precisa ser um número positivo"
+            "any.required": "O campo descrição é obrigatório",
+            "string.empty": "A descrição não pode estar vazia",
         }),
 
     duedate: joi
@@ -29,6 +27,16 @@ const chargeSchemas = joi.object({
             "string.empty": "A data não pode estar vazia",
         }),
 
+    value: joi
+        .number()
+        .positive()
+        .required()
+        .messages({
+            "any.required": "O campo valor é obrigatório",
+            "number.empty": "O valor não pode estar vazio",
+            "number.base": "O campo valor precisa ser um número",
+            "number.positive": "O campo valor precisa ser um número positivo"
+        }),
     status: joi
         .boolean()
         .required()
@@ -37,13 +45,6 @@ const chargeSchemas = joi.object({
             "boolean.base": "O status não pode estar vazio",
         }),
 
-    description: joi
-        .string()
-        .required()
-        .messages({
-            "any.required": "O campo descrição é obrigatório",
-            "string.empty": "A descrição não pode estar vazia",
-        }),
 
 });
 

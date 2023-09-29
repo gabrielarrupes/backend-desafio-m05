@@ -2,6 +2,22 @@ const joi = require("joi");
 
 const chargeUpdateSchemas = joi.object({
 
+    description: joi
+        .string()
+        .required()
+        .messages({
+            "any.required": "O campo descrição é obrigatório",
+            "string.empty": "A descrição não pode estar vazia",
+        }),
+
+    duedate: joi
+        .string()
+        .required()
+        .messages({
+            "any.required": "O campo data de vencimento é obrigatório",
+            "string.empty": "A data não pode estar vazia",
+        }),
+
     value: joi
         .number()
         .positive()
@@ -13,13 +29,7 @@ const chargeUpdateSchemas = joi.object({
             "number.positive": "O campo valor precisa ser um número positivo"
         }),
 
-    duedate: joi
-        .string()
-        .required()
-        .messages({
-            "any.required": "O campo data de vencimento é obrigatório",
-            "string.empty": "A data não pode estar vazia",
-        }),
+
 
     status: joi
         .boolean()
@@ -27,14 +37,6 @@ const chargeUpdateSchemas = joi.object({
         .messages({
             "any.required": "O campo status é obrigatório",
             "boolean.empty": "O status não pode estar vazio",
-        }),
-
-    description: joi
-        .string()
-        .required()
-        .messages({
-            "any.required": "O campo descrição é obrigatório",
-            "string.empty": "A descrição não pode estar vazia",
         }),
 
 });
