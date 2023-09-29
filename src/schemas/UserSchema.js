@@ -17,7 +17,7 @@ const userSchema = joi.object({
     "any.required": "O campo email é obrigatório",
   }),
 
-  cpf: joi.string().min(11).pattern(/^\d+$/).messages({
+  cpf: joi.string().min(11).max(11).pattern(/^\d+$/).messages({
     "string.min": "O CPF deve conter 11 números",
     "string.pattern.base": "O cpf deve conter apenas números",
     "string.max": "O CPF deve conter apenas 11 números",
