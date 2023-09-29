@@ -3,7 +3,7 @@ const express = require("express");
 const Login = require("../controllers/Login");
 const { postUser, putUser, getUser } = require("../controllers/User");
 const { postCustomer, getCustomer, getCustomerId, putCustomer } = require("../controllers/Customer");
-const { postCharge, getCharge, getChargeId, putCharge } = require("../controllers/Charge");
+const { postCharge, getCharge, getChargeId, putCharge, deleteCharge } = require("../controllers/Charge");
 
 const { userSchema } = require("../schemas/UserSchema");
 const { userUpdateSchema } = require("../schemas/UserUpdateSchema");
@@ -51,5 +51,6 @@ router.get("/charge", getCharge);
 
 router.put("/charge/:id", ChargeUpdateValidation(chargeUpdateSchemas), putCharge);
 
+router.delete("/charge/:id", deleteCharge);
 
 module.exports = router;
