@@ -2,8 +2,20 @@ const express = require("express");
 
 const Login = require("../controllers/Login");
 const { postUser, putUser, getUser } = require("../controllers/user");
-const { postCustomer, getCustomer, getCustomerId, putCustomer } = require("../controllers/Customer");
-const { postCharge, getCharge, getChargeId, putCharge, deleteCharge } = require("../controllers/Charge");
+const {
+  postCustomer,
+  getCustomer,
+  getCustomerId,
+  putCustomer,
+} = require("../controllers/Customer");
+const {
+  postCharge,
+  getCharge,
+  getChargeId,
+  putCharge,
+  deleteCharge,
+} = require("../controllers/Charge");
+
 
 const { userSchema } = require("../schemas/UserSchema");
 const { userUpdateSchema } = require("../schemas/UserUpdateSchema");
@@ -20,14 +32,10 @@ const ChargeRegistrationValidation = require("../middleware/ChargeRegistrationVa
 const CustomerUpdateValidation = require("../middleware/CustomerUpdateValidation");
 const ChargeUpdateValidation = require("../middleware/ChargeUpdateValidation");
 
-
-
 const router = express();
 
 router.post("/login", Login);
 router.post("/signUp", UserRegistrationValidation(userSchema), postUser);
-
-
 
 router.use(UserLoggedValidation);
 
@@ -35,13 +43,21 @@ router.get("/", getUser);
 
 router.put("/user/update", UserUpdateValidation(userUpdateSchema), putUser);
 
-router.post("/customer", CustomerRegistrationValidation(customerSchema), postCustomer);
+router.post(
+  "/customer",
+  CustomerRegistrationValidation(customerSchema),
+  postCustomer
+);
 
 router.get("/customer", getCustomer);
 
 router.get("/customer/:id", getCustomerId);
 
-router.put('/customer/:id', CustomerUpdateValidation(customerUpdateSchema), putCustomer);
+router.put(
+  "/customer/:id",
+  CustomerUpdateValidation(customerUpdateSchema),
+  putCustomer
+);
 
 router.post("/charge", ChargeRegistrationValidation(chargeSchemas), postCharge);
 
@@ -49,7 +65,11 @@ router.get("/charge/:id", getChargeId);
 
 router.get("/charge", getCharge);
 
-router.put("/charge/:id", ChargeUpdateValidation(chargeUpdateSchemas), putCharge);
+router.put(
+  "/charge/:id",
+  ChargeUpdateValidation(chargeUpdateSchemas),
+  putCharge
+);
 
 router.delete("/charge/:id", deleteCharge);
 
