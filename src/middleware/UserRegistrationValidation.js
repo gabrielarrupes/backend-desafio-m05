@@ -6,7 +6,7 @@ const UserRegistrationValidation = (joiSchema) => async (req, res, next) => {
       return;
     } catch (error) {
       console.log(error);
-      return res.status(400).json({ message: error.message });
+      return res.status(400).json({ message: error.message, detail: error.details[0].path[0] });
     }
   }
 

@@ -100,5 +100,35 @@ const putCharge = async (req, res) => {
 }
 
 
+const deleteCharge = async (req, res) => {
+    const { id } = req.params;
+    try {
 
-module.exports = { postCharge, getCharge, getChargeId, putCharge }
+        const chargeId = await connection("charge").where('id', id).first();
+
+        if (!chargeId) {
+            return res.status(404).json({ mesagem: "Cobrança não encontrada" })
+        }
+        if (chargeId.status === true) {
+            return res.status(403).json({ message: 'Não é permitido excluir uma cobrança paga!' });
+        }
+        const currentDate = new Date();
+        const chargeDate = new Date(chargeId.duedate);
+
+        if (chargeDate < currentDate) {
+            return res.status(403).json({ message: 'Não é permitido excluir uma cobrança vencida' });
+        }
+
+        const removeCharge = await connection("charge").where({ id }).delete();
+
+        if (!removeCharge) {
+            return res.status(400).json({ message: 'Cobrança não excluida' });
+        }
+
+        return res.status(200).json({ message: 'Cobrança excluída com sucesso' });
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json("Erro interno do servidor");
+    }
+}
+module.exports = { postCharge, getCharge, getChargeId, putCharge, deleteCharge }
