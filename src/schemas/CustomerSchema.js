@@ -12,19 +12,21 @@ const customerSchema = joi.object({
     }),
 
   email: joi.string().email().required().messages({
-    "string.email": "O email informado é inválido",
+    "string.email": "O e-mail deve ter um formato válido, exemplo: email@email.com",
     "string.empty": "O email não pode estar vazio",
     "any.required": "O email é obrigatório",
   }),
 
-  cep: joi.string().max(8).pattern(/^\d+$/).messages({
+  cep: joi.string().max(8).pattern(/^\d+$/).required().messages({
     "string.max": "O cep deve ter no máximo 8 caracteres",
     "string.pattern.base": "O cep deve conter apenas números",
+    "any.required": "O CEP é obrigatório"
   }),
-  cpf: joi.string().max(11).pattern(/^\d+$/).messages({
+  cpf: joi.string().min(11).max(11).pattern(/^\d+$/).required().messages({
     "string.min": "O CPF deve conter 11 números",
     "string.pattern.base": "O cpf deve conter apenas números",
     "string.max": "O CPF deve conter apenas 11 números",
+    "any.required": "O CPF é obrigatório"
   }),
 
   telephone: joi.string().pattern(/^\d+$/).required().messages({
