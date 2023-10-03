@@ -1,6 +1,6 @@
 # API Garotos de Programa
 
-Link da api: https://testedeploybackm5-8b207db3eb59.herokuapp.com/ ;
+Link da api: https://apidegarotosdev.onrender.com/ ;
 
 Bem-vindo à API Garotos de Programa! Esta API permite que você registre e edite usuários, faça login e cadastre clientes. Tudo com validações rigorosas para garantir a segurança dos dados.
 
@@ -128,7 +128,7 @@ Status 404 (Not Found) - Senha incorreta:
 
 # Endpoint getUser
 
-- **Cadastro de Usuário**: `GET /user/id`
+- **Listagem de Usuário**: `GET /user/id`
 
 ### Dados de Entrada
 
@@ -147,7 +147,7 @@ Status 404 (Not Found) - Senha incorreta:
 **Respostas:**
 Sucesso (Status 200):
 
-- Se todas as validações forem bem-sucedidas, o usuário será cadastrado e a API retornará um objeto contendo as informações do usuario:
+- Se todas as validações forem bem-sucedidas, o usuário será listado.
 
 > {
 > "nome": "Novo Nome",
@@ -493,7 +493,7 @@ Status 400 (Bad Request) - Validação de duedate:
 
 ---
 
-# Listagem de Cobranças
+# Listagem de Cobranças por id
 
 - **Listagem de Cobranças**: `GET /charge/:id`
 
@@ -539,6 +539,49 @@ Status 404 (Not Found) - Validação de ID:
 > { "message": "Cobrança não encontrada." }
 
 ---
+
+# Listagem de Cobranças 
+
+- **Listagem de Cobranças**: `GET /charge`
+
+## Dados de Entrada
+
+- **O usuário deve estar autenticado para poder fazer o get de cobranças**
+
+## Exemplo de Requisição
+  > GET /charge
+> Content-Type: application/json
+> headers: {
+> 'Authorization': `Bearer ${token}`
+> };
+
+**Respostas:**
+Sucesso (Status 200):
+[
+	{
+		"id": 5,
+		"idcustomer": 2,
+		"value": 20000,
+		"duedate": "2000-10-07T03:00:00.000Z",
+		"status": true,
+		"description": "pagamento realizado"
+	},
+	{
+		"id": 8,
+		"idcustomer": 3,
+		"value": 50000,
+		"duedate": "2000-10-07T03:00:00.000Z",
+		"status": false,
+		"description": "pagamento programado"
+	}
+]
+**Erros Possíveis:**
+
+- A API retornará mensagens de erro específicas para cada validação não atendida. Aqui estão alguns exemplos:
+
+
+---
+
 # Endpoint Edição de Cliente
 
 - **Edição de cliente**: `PUT /customer/:id`
@@ -623,7 +666,110 @@ Status 400 (Bad Request) - Validação de Telefone:
 > {"message": "O campo telefone deve conter apenas números."}
 
 ---
+# Endpoint Edição de Cobrança
 
+- **Edição de cobrança**: `PUT /charge/:id`
+
+### Dados de Entrada
+
+- Para editar uma cobrança existente, você pode fornecer os seguintes dados:
+
+- `value`\*: valor da cobraça (deve conter apenas numeros positivos)(deve ser obrigatório).
+- `duedate`\*: data de vencimento (deve ser obrigatório).
+- `status`\*: deve ser true ou false (deve ser obrigatório).
+- `description`\*: descrição da cobrança deve ser uma string (deve ser obrigatório).
+
+
+## Exemplo de Requisição
+
+- Aqui está um exemplo de como fazer uma requisição para editar uma cobrança existente:
+
+- **O usuário deve estar autenticado para poder fazer a alteração das informações de cobrança**
+
+  - O usuario precisa enviar o id do cliente da cobrança no params.
+
+> PUT /charge/1
+> Content-Type: application/json
+>
+> headers: {
+> 'Authorization': `Bearer ${token}`
+> };
+>{
+>"value": 123,
+> "duedate": "10/03/2020",
+>"status": "false",
+>"description":"pagamento"	
+>}
+
+
+**Respostas:**
+
+Sucesso (Status 200):
+
+- Se todas as validações forem bem-sucedidas, a cobrança será atualizada e a API retornará uma mensagem de sucesso:
+
+> {"message": "Cobrança atualizada com sucesso!"}
+
+**Erros Possíveis:**
+
+- A API retornará mensagens de erro específicas para cada validação não atendida. Aqui estão alguns exemplos:
+
+Status 400 (Bad Request) - Nenhum dado foi alterado:
+
+> {"message": "Ao menos um campo deve ser alterado."}
+
+Status 400 (Bad Request) - Validação de valor:
+
+> {"message": "O valor deve ser um número positivo."}
+---
+# Endpoint deletar cobrança
+
+- **Excluir cobrança**: `DELETE /charge/:id`
+
+### Dados de Entrada
+
+- Para deletar uma cobrança existente, você só conseguirá se ela for uma cobrança pendente.
+
+- Não é nescessario o envio de nenhum dado no campo do body.
+
+
+## Exemplo de Requisição
+
+- Aqui está um exemplo de como fazer uma requisição para deletar uma cobrança existente:
+
+- **O usuário deve estar autenticado para poder fazer a exclusão da cobrança**
+
+  - O usuario precisa enviar o id do cliente da cobrança no params.
+
+> DELETE /charge/1
+> Content-Type: application/json
+>
+> headers: {
+> 'Authorization': `Bearer ${token}`
+> };
+
+
+
+**Respostas:**
+
+Sucesso (Status 200):
+
+- Se todas as validações forem bem-sucedidas, a cobrança será excluida e a API retornará uma mensagem de sucesso:
+
+> {"message": "Cobrança excluida com sucesso!"}
+
+**Erros Possíveis:**
+
+- A API retornará mensagens de erro específicas para cada validação não atendida. Aqui estão alguns exemplos:
+
+Status 400 (Bad Request) - Se a cobrança estiver paga:
+
+> {"message": "Não é permitido excluir uma cobrança paga!"}
+
+Status 400 (Bad Request) - Se a cobrança estiver vencida:
+
+> {"message": "Não é permitido excluir uma cobrança vencida!"}
+---
 ## Autor:
 
 **_Equipe Garotos de Progarama_**

@@ -116,7 +116,7 @@ const deleteCharge = async (req, res) => {
         const chargeDate = new Date(chargeId.duedate);
 
         if (chargeDate < currentDate) {
-            return res.status(403).json({ message: 'Não é permitido excluir uma cobrança vencida' });
+            return res.status(403).json({ message: 'Não é permitido excluir uma cobrança vencida!' });
         }
 
         const removeCharge = await connection("charge").where({ id }).delete();
