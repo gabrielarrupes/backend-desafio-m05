@@ -39,17 +39,14 @@ const userSchema = joi.object({
       "any-required": "O campo senha é obrigatório",
       "string.min":
         "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
-      "string.regex.base":
+      "string.pattern.base":
         "A senha deve ter no mínimo 8 caracteres, pelo menos um número, pelo menos uma letra maiúscula e pelo menos um caractere especial",
     }),
 
-  repeatedPassword: joi
-    .string()
-    .required()
-    .messages({
-      "any-required": "O campo Repita Senha é obrigatório",
-      "string.empty": "O campo Repita Senha é obrigatório",
-    }),
+  repeatedPassword: joi.string().required().messages({
+    "any-required": "O campo Repita Senha é obrigatório",
+    "string.empty": "O campo Repita Senha é obrigatório",
+  }),
 
   activeStep: joi.number(),
 });
