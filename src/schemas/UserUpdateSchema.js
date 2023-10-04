@@ -29,7 +29,6 @@ const userUpdateSchema = joi.object({
     .string()
     .min(8)
     .pattern(/^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*.])/)
-    .required()
     .messages({
       "string.empty": "O campo Senha é obrigatório",
       "any-required": "O campo senha é obrigatório",

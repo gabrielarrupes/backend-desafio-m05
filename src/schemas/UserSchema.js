@@ -32,7 +32,7 @@ const userSchema = joi.object({
   password: joi
     .string()
     .min(8)
-    .regex(/^(?=.*[A-Z])(?=.*[!@#$%^&*])/)
+    .pattern(/^(?=.*[A-Z])(?=.*[!@#$%^&*])/)
     .required()
     .messages({
       "string.empty": "O campo Senha é obrigatório",

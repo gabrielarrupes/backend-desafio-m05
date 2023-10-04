@@ -68,10 +68,16 @@ const getUser = async (req, res) => {
 const putUser = async (req, res) => {
   const { id } = req.user;
   const { name, email, cpf, telephone, password } = req.body;
-  const { emailUser } = req.user;
+
+  const { emailUser, passwordUser } = req.user
+
   let passwordHash = password;
 
   let currentCpf = cpf || "";
+
+  if (!password) {
+    password = passwordUser
+  }
 
   if (password) {
     passwordHash = await bcrypt.hash(password, 10);
@@ -80,12 +86,17 @@ const putUser = async (req, res) => {
   try {
     const newEmail = req.body.email;
     if (newEmail !== emailUser.email) {
-      const emailExistsInDatabase = await connection("users")
-        .where({ email })
-        .first();
 
-      if (emailExistsInDatabase) {
-        return res.status(400).json({ message: "Email já cadastrado" });
+
+      const newEmail = req.body.email
+      if (newEmail !== emailUser) {
+
+
+        const emailExistsInDatabase = await connection("users").where({ email }).first();
+
+        if (emailExistsInDatabase) {
+          return res.status(400).json({ message: "Email já cadastrado" });
+        }
       }
     }
 
