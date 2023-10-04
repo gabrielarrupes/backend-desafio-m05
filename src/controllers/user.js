@@ -12,8 +12,6 @@ const postUser = async (req, res) => {
     return res.status(400).json({ message: "O campo email é obrigatório" });
   }
 
-  console.log(activeStep);
-
   try {
     if (name && email && activeStep === 0) {
       const emailExistsInDatabase = await connection("users")
@@ -69,14 +67,17 @@ const putUser = async (req, res) => {
   const { id } = req.user;
   const { name, email, cpf, telephone, password } = req.body;
 
-  const { emailUser, passwordUser } = req.user
+  const emailUser = req.user.email;
+  const cpfUser = req.user.cpf;
+
+  const passwordUser = req.user.password;
 
   let passwordHash = password;
 
   let currentCpf = cpf || "";
 
   if (!password) {
-    password = passwordUser
+    passwordHash = passwordUser;
   }
 
   if (password) {
@@ -85,17 +86,25 @@ const putUser = async (req, res) => {
 
   try {
     const newEmail = req.body.email;
-    if (newEmail !== emailUser.email) {
 
+    if (newEmail !== emailUser) {
+      const emailExistsInDatabase = await connection("users")
+        .where({ email })
+        .first();
+      if (emailExistsInDatabase) {
+        return res.status(400).json({ message: "Email já cadastrado!!!" });
+      }
+    }
 
-      const newEmail = req.body.email
-      if (newEmail !== emailUser) {
+    const newCPF = req.body.cpf;
 
-
-        const emailExistsInDatabase = await connection("users").where({ email }).first();
-
-        if (emailExistsInDatabase) {
-          return res.status(400).json({ message: "Email já cadastrado" });
+    if (newCPF) {
+      if (newCPF !== cpfUser) {
+        const cpfExistsInDatabase = await connection("users")
+          .where({ cpf })
+          .first();
+        if (cpfExistsInDatabase) {
+          return res.status(400).json({ message: "CPF já cadastrado!!!" });
         }
       }
     }
